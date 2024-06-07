@@ -9,10 +9,10 @@
   }
   
   .register-container form {
-    background: rgba(255, 255, 255, 0.8); /* Translucido */
+    background: rgba(255, 255, 255, 0.3);
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 1;
   }
   
@@ -39,7 +39,7 @@
   .register-container button {
     width: 100%;
     padding: 10px;
-    background-color: #0a6b92; /* Cambiar el color del botón */
+    background-color: #0a6b92;
     color: white;
     border: none;
     border-radius: 5px;
@@ -47,7 +47,7 @@
   }
   
   .register-container button:hover {
-    background-color: #064755; /* Cambiar el color del botón al pasar el ratón */
+    background-color: #064755; 
   }
   
   .register-container .error {
@@ -64,7 +64,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('@/assets/fondo.jpg'); /* Asegúrate de que la ruta sea correcta */
+    background-image: url('@/assets/fondo.jpg');
     background-size: cover;
     background-position: center;
     z-index: -1;
@@ -76,7 +76,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Oscurece la imagen de fondo */
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: -1;
   }
   
