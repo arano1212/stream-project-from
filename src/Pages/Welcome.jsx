@@ -12,7 +12,7 @@ const Welcome = () => {
         <p>Disfruta de miles de películas y series en cualquier lugar.</p>
         <div className='welcome-buttons'>
           <Link to='/login' className='welcome-button'>Iniciar Sesión</Link>
-          <Link to='/signup' className='welcome-button'>Registrarse</Link>
+          <Link to='/register' className='welcome-button'>Registrarse</Link>
         </div>
       </div>
     </div>

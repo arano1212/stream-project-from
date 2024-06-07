@@ -3,23 +3,20 @@ import '@/Styles/formLogin.css'
 const Login = () => {
   return (
     <>
-      <div className='container'>
-        <form className='bg-white p-4 rounded shadow' style={{ width: '300px' }}>
-          <div className='mb-3'>
-            <img
-              className='mb-4'
-              src='./src/assets/s.png'
-              width={70}
-              height={70}
-              alt='logo-stream'
-              style={{ marginLeft: '93px' }}
-            />
-            <input type='email' name='email' className='form-control' placeholder='Email' required />
+      <div className='login-container'>
+        <div className='shared-background' />
+        <div className='shared-overlay' />
+        <form>
+          <h2>Login</h2>
+          <div className='form-group'>
+            <label>Email:</label>
+            <input type='email' name='email' required />
           </div>
-          <div className='mb-3'>
-            <input type='password' name='password' className='form-control' placeholder='Password' required />
+          <div className='form-group'>
+            <label>Password:</label>
+            <input type='password' name='password' required />
           </div>
-          <button type='submit' className='btn btn-info w-100'>Login</button>
+          <button type='submit'>Login</button>
         </form>
       </div>
 
