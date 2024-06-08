@@ -28,7 +28,7 @@ const Home = () => {
       })
       .catch((error) => {
         console.error('Error fetching movies:', error)
-        setMovies([]) 
+        setMovies([])
       })
   }, [])
 
@@ -46,7 +46,6 @@ const Home = () => {
     })
   }
 
-
   const movieRows = []
   for (let i = 0; i < shuffledMovies.length; i += 7) {
     movieRows.push(shuffledMovies.slice(i, i + 7))
@@ -57,7 +56,7 @@ const Home = () => {
       {movieRows.map((row, rowIndex) => (
         <div className='movie-row' key={rowIndex}>
           <button className='nav-arrow left' onClick={() => scrollLeft(rowIndex)}>
-            &lt; 
+            &lt;
           </button>
           <div className={`movies-flex row-${rowIndex}`}>
             {row.length > 0
