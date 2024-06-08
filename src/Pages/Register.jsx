@@ -24,6 +24,8 @@ const Register = () => {
           <div className='form-group'>
             <label>Avatar URL:</label>
             <input type='text' name='avatar' />
+            <label htmlFor='formFile' className='form-label mt-4'>Upload Avatar</label>
+            <input className='form-control' type='file' id='formFile' name='avatar' />
           </div>
           <div className='form-group'>
             <label>Role:</label>
@@ -33,6 +35,7 @@ const Register = () => {
             </select>
           </div>
           <button type='submit'>Register</button>
+
         </form>
       </div>
     </>
