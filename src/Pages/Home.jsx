@@ -5,8 +5,9 @@ import axiosInstance from '../Services/movieServices'
 const shuffleArray = (array) => {
   const shuffledArray = [...array]
   for (let i = shuffledArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]]
+    const j = Math.floor(Math.random() * (i + 1))
+
+    ;[shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]]
   }
   return shuffledArray
 }
@@ -14,6 +15,7 @@ const shuffleArray = (array) => {
 const Home = () => {
   const [movies, setMovies] = useState([])
   const [shuffledMovies, setShuffledMovies] = useState([])
+  const [featuredMovie, setFeaturedMovie] = useState(null)
 
   useEffect(() => {
     axiosInstance.get('/api/v1/movies', {
@@ -25,6 +27,7 @@ const Home = () => {
         const moviesData = response.data || []
         setMovies(moviesData)
         setShuffledMovies(shuffleArray(moviesData))
+        setFeaturedMovie(moviesData[Math.floor(Math.random() * moviesData.length)])
       })
       .catch((error) => {
         console.error('Error fetching movies:', error)
@@ -53,6 +56,18 @@ const Home = () => {
 
   return (
     <div className='home-container'>
+      {featuredMovie && (
+        <div className='featured-movie'>
+          <img
+            src={featuredMovie.poster_path.startsWith('data:image') ? featuredMovie.poster_path : `https://image.tmdb.org/t/p/w500${featuredMovie.poster_path}`}
+            alt={featuredMovie.title}
+          />
+          <div className='featured-movie-info'>
+            <h2>{featuredMovie.title}</h2>
+            <p>{featuredMovie.overview}</p>
+          </div>
+        </div>
+      )}
       {movieRows.map((row, rowIndex) => (
         <div className='movie-row' key={rowIndex}>
           <button className='nav-arrow left' onClick={() => scrollLeft(rowIndex)}>

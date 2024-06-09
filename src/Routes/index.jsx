@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import { Login, Home, Welcome, Register } from '@/Pages'
+import { Login, Home, Welcome, Register, CreateMovie } from '@/Pages'
 
 const Index = () => {
   return (
@@ -9,6 +9,7 @@ const Index = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/' element={<Home />} />
+        <Route path='/createMovie' element={<CreateMovie />} />
       </Routes>
     </>
   )
