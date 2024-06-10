@@ -41,7 +41,6 @@ const Register = () => {
         avatar,
         role
       })
-      // Redirigir a la página de inicio de sesión después del registro exitoso
       navigate('/login')
     } catch (error) {
       console.error('Error registering user:', error)
