@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import '@/Styles/home.css'
-import axiosInstance from '../Services/movieServices'
+import axiosInstance from '@/Services/movieServices'
 
 const shuffleArray = (array) => {
   const shuffledArray = [...array]
