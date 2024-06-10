@@ -3,23 +3,30 @@ import axiosInstance from '@/Services/movieServices'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { useAuthContext } from '@/Hooks/useAuth'
 
 const Login = () => {
+  const { login } = useAuthContext()
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
   const { register, handleSubmit } = useForm()
+  const [errorMessage, setErrorMessage] = useState('')
 
   const onSubmit = async (data) => {
     console.log('Form data:', data)
     try {
       const response = await axiosInstance.post('/api/v1/login', data)
-      console.log('Response:', response) //
+      console.log('Response:', response)
       if (response.status === 200) {
+        const token = response.data.token
+        login(token)
         navigate('/')
       }
     } catch (error) {
       console.error('Login failed:', error)
+      setErrorMessage('Invalid email or password')
       alert('Invalid email or password')
     }
   }
@@ -51,6 +58,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          {errorMessage && <p className='error-message'>{errorMessage}</p>}
           <button type='submit'>Login</button>
         </form>
       </div>
