@@ -1,3 +1,4 @@
+
 .login-container {
   position: relative;
   display: flex;
@@ -9,7 +10,7 @@
 }
 
 .login-container form {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(51, 51, 51, 0.85); 
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -29,7 +30,7 @@
 .login-container button {
   width: 100%;
   padding: 10px;
-  background-color: #0a6b92;
+  background-color: #e50914;
   border: none;
   color: white;
   border-radius: 4px;
@@ -37,7 +38,7 @@
 }
 
 .login-container button:hover {
-  background-color: #064755;
+  background-color: #b00710;
 }
 
 .shared-background {

@@ -39,7 +39,7 @@
   }
   
   .welcome-button {
-    background-color:  #138496;;
+    background-color:  #e50914;
     border: none;
     color: white;
     padding: 10px 20px;
@@ -51,6 +51,6 @@
   }
   
   .welcome-button:hover {
-    background-color:  #064755;;
+    background-color:   #920c13;
   }
   
