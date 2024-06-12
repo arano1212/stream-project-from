@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
+import axiosInstance from '@/Services/movieServices'
 import '@/Styles/createMovie.css'
-import axios from 'axios'
 
 const CreateMovie = () => {
   const [formData, setFormData] = useState({
@@ -13,25 +13,45 @@ const CreateMovie = () => {
     poster_path: '',
     original_language: ''
   })
+  const [message, setMessage] = useState('')
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
   }
 
+  const convertDate = (dateString) => {
+    const [day, month, year] = dateString.split('/')
+    return `${year}-${month}-${day}`
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post('/api/movies', formData)
+      const convertedDate = convertDate(formData.release_date)
+      const token = localStorage.getItem('token')
+      const response = await axiosInstance.post('/api/v1/movies',
+        { ...formData, release_date: convertedDate },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
       console.log('Movie created successfully:', response.data)
+      setMessage('Movie created successfully')
+      alert('Movie created successfully')
     } catch (error) {
       console.error('Error creating movie:', error)
+      setMessage('Error creating movie')
+      alert('Error creating movie')
     }
   }
 
   return (
     <div className='create-movie-container'>
       <h2>Create Movie</h2>
+      {message && <p>{message}</p>}
       <form className='create-movie-form' onSubmit={handleSubmit}>
         <label>
           Title:
