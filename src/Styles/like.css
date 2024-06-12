@@ -1,0 +1,39 @@
+.like-button,
+.liked-text {
+  position: relative;
+  top: -20px;
+  left: 10px; 
+  padding: 5px 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #e50914;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.like-button:hover {
+  animation: pulse 0.5s;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.icon-thumb {
+  margin-right: 5px;
+}
+
+.icon-party-horn {
+  margin-left: 5px;
+}
