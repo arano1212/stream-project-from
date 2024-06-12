@@ -3,6 +3,7 @@ import axiosInstance from '@/Services/movieServices'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import { FaThumbsUp, FaRegBell } from 'react-icons/fa'
+import { AiOutlineClose } from 'react-icons/ai' // Import the 'X' icon
 import '@/Styles/home.css'
 import '@/Styles/like.css'
 
@@ -67,40 +68,32 @@ const Home = () => {
 
   const handleLike = async (movieId) => {
     try {
-      // Verificar si el usuario ya ha dado like a esta película
       if (likedMovies[movieId]) {
         alert("You've already liked this movie.")
         return
       }
 
-      // Obtener el token de autenticación del almacenamiento local
       const token = localStorage.getItem('token')
 
-      // Realizar la solicitud para dar like a la película
       await axiosInstance.patch(
         `/api/v1/movies/${movieId}`,
         {
-          // Incrementar el vote_count en 1
           vote_count: movies.find((movie) => movie._id === movieId).vote_count + 1
         },
         {
-          // Agregar el token de autenticación al encabezado
           headers: {
             Authorization: `Bearer ${token}`
           }
         }
       )
 
-      // Realizar una solicitud GET para obtener la información actualizada de la película
       const updatedMovieResponse = await axiosInstance.get(`/api/v1/movies/vote-counts/${movieId}`)
       const updatedMovie = updatedMovieResponse.data
 
-      // Actualizar el estado de las películas con la información actualizada
       setMovies((prevMovies) =>
         prevMovies.map((movie) => (movie._id === movieId ? { ...movie, vote_count: updatedMovie.vote_count } : movie))
       )
 
-      // Actualizar el estado para reflejar que el usuario ha dado like a esta película
       setLikedMovies((prevState) => ({
         ...prevState,
         [movieId]: true
@@ -110,6 +103,30 @@ const Home = () => {
     } catch (error) {
       console.error('Error liking movie:', error)
       alert('Failed to like the movie. Please try again later.')
+    }
+  }
+
+  const handleDelete = async (movieId) => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this movie?')
+    if (!confirmDelete) {
+      return
+    }
+
+    try {
+      const token = localStorage.getItem('token')
+
+      await axiosInstance.patch(`/api/v1/movies/${movieId}`, { isActive: false }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      setMovies((prevMovies) => prevMovies.filter((movie) => movie._id !== movieId))
+      setShuffledMovies((prevMovies) => prevMovies.filter((movie) => movie._id !== movieId))
+      handleCloseModal()
+    } catch (error) {
+      console.error('Error deleting movie:', error)
+      alert('Failed to delete the movie. Please try again later.')
     }
   }
 
@@ -193,7 +210,10 @@ const Home = () => {
           borderTop: 'none'
         }}
         >
-          <Button variant='danger' onClick={handleCloseModal}>
+          <Button variant='outline-danger' onClick={() => handleDelete(selectedMovie._id)}>
+            <AiOutlineClose /> Eliminar
+          </Button>
+          <Button variant='secondary' onClick={handleCloseModal}>
             Close
           </Button>
         </Modal.Footer>
