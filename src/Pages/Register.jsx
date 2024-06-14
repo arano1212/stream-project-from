@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+// import axiosInstance from '@/Services/movieServices'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import '@/Styles/register.css'

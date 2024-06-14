@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import axiosInstance from '@/Services/movieServices'
+// import axiosInstance from '@/Services/movieServices'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import { FaThumbsUp, FaRegBell } from 'react-icons/fa'
-import { AiOutlineClose } from 'react-icons/ai' // Import the 'X' icon
+import { AiOutlineClose } from 'react-icons/ai'
+import { getAllMovieServices, getLike, deleteMovie } from '@/Services/movieServices2'
 import '@/Styles/home.css'
 import '@/Styles/like.css'
 
@@ -25,7 +26,7 @@ const Home = () => {
   const [likedMovies, setLikedMovies] = useState({})
 
   useEffect(() => {
-    axiosInstance.get('/api/v1/movies', {
+    getAllMovieServices({
       headers: {
         'Cache-Control': 'no-cache'
       }
@@ -83,11 +84,9 @@ const Home = () => {
         throw new Error('Movie not found.')
       }
 
-      const updatedMovie = await axiosInstance.patch(
-        `/api/v1/movies/${movieId}`,
-        {
-          vote_count: movie.vote_count + 1
-        },
+      const updatedMovie = await getLike(
+        movieId,
+        { vote_count: movie.vote_count + 1 },
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -119,8 +118,11 @@ const Home = () => {
 
     try {
       const token = localStorage.getItem('token')
+      if (!token) {
+        throw new Error('Token not found in localStorage.')
+      }
 
-      await axiosInstance.patch(`/api/v1/movies/${movieId}`, { isActive: false }, {
+      await deleteMovie(movieId, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -210,11 +212,7 @@ const Home = () => {
           <p><strong>Vote Average:</strong> {selectedMovie?.vote_average}</p>
           <p><strong>Vote Count:</strong> {selectedMovie?.vote_count}</p>
         </Modal.Body>
-        <Modal.Footer style={{
-          backgroundColor: '#141414',
-          borderTop: 'none'
-        }}
-        >
+        <Modal.Footer style={{ backgroundColor: '#141414', borderTop: 'none' }}>
           <Button variant='outline-danger' onClick={() => handleDelete(selectedMovie._id)}>
             <AiOutlineClose /> Eliminar
           </Button>
