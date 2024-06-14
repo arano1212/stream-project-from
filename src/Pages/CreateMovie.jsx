@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import axiosInstance from '@/Services/movieServices'
+// import axiosInstance from '@/Services/movieServices'
 import '@/Styles/createMovie.css'
+import { createMovie } from '@/Services/movieServices2'
 
 const CreateMovie = () => {
   const [formData, setFormData] = useState({
@@ -30,7 +31,7 @@ const CreateMovie = () => {
     try {
       const convertedDate = convertDate(formData.release_date)
       const token = localStorage.getItem('token')
-      const response = await axiosInstance.post('/api/v1/movies',
+      const response = await createMovie(
         { ...formData, release_date: convertedDate },
         {
           headers: {
