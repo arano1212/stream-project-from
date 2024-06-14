@@ -1,9 +1,10 @@
 import '@/Styles/formLogin.css'
-import axiosInstance from '@/Services/movieServices'
+// import axiosInstance from '@/Services/movieServices'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useAuthContext } from '@/Hooks/useAuth'
+import { loginUserServices } from '@/Services/useServices'
 
 const Login = () => {
   const { login } = useAuthContext()
@@ -17,7 +18,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     console.log('Form data:', data)
     try {
-      const response = await axiosInstance.post('/api/v1/login', data)
+      const response = await loginUserServices(data)
       console.log('Response:', response)
       if (response.status === 200) {
         const token = response.data.token

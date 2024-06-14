@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import axiosInstance from '@/Services/movieServices'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import '@/Styles/register.css'
+import { registerUserServices, checkUserName } from '@/Services/useServices'
 
 const Register = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
-  const [avatar, setAvatar] = useState('')
+  const [avatar, setAvatar] = useState(null)
   const [role, setRole] = useState('basic')
   const [isUsernameAvailable, setIsUsernameAvailable] = useState(true)
   const [usernameMessage, setUsernameMessage] = useState('')
@@ -18,7 +18,7 @@ const Register = () => {
   useEffect(() => {
     const checkUsernameAvailability = async (username) => {
       try {
-        const response = await axiosInstance.get(`/api/v1/check-username/${username}`)
+        const response = await checkUserName(username)
         setIsUsernameAvailable(response.data.isAvailable)
         setUsernameMessage(response.data.isAvailable ? 'Username is available' : 'Username is not available')
       } catch (error) {
@@ -34,13 +34,16 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     try {
-      await axiosInstance.post('/api/v1/register', {
-        email,
-        password,
-        username,
-        avatar,
-        role
-      })
+      const formData = new FormData()
+      formData.append('email', email)
+      formData.append('password', password)
+      formData.append('username', username)
+      if (avatar) {
+        formData.append('avatar', avatar)
+      }
+      formData.append('role', role)
+
+      await registerUserServices(formData)
       navigate('/login')
     } catch (error) {
       console.error('Error registering user:', error)
@@ -83,7 +86,7 @@ const Register = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
-            <p style={{ color: isUsernameAvailable ? 'black' : 'red' }}>{usernameMessage}</p>
+            <p style={{ color: isUsernameAvailable ? 'green' : 'red' }}>{usernameMessage}</p>
           </div>
           <div className='form-group'>
             <label>Avatar URL:</label>
@@ -91,13 +94,18 @@ const Register = () => {
               type='text'
               name='avatar'
               {...register('avatar')}
-              value={avatar}
-              onChange={(e) => setAvatar(e.target.value)}
+              onChange={(e) => setAvatar(e.target.files[0])}
             />
             <label htmlFor='formFile' className='form-label mt-4'>
               Upload Avatar
             </label>
-            <input className='form-control' type='file' id='formFile' name='avatar' />
+            <input
+              className='form-control'
+              type='file'
+              id='formFile'
+              name='avatar'
+              onChange={(e) => setAvatar(e.target.files[0])}
+            />
           </div>
           <div className='form-group'>
             <label>Role:</label>
