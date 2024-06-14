@@ -66,7 +66,7 @@ const Header = () => {
                           Post
                         </NavLink>
                       )}
-                      <a className='dropdown-item' href='#'>Another action</a>
+                      <NavLink className='dropdown-item' to='/secret'>information</NavLink>
                       <a className='dropdown-item' href='#'>Something else here</a>
                       <div className='dropdown-divider' />
                       <button className='dropdown-item btn' onClick={handleLogout}>

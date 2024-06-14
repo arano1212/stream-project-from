@@ -74,11 +74,19 @@ const Home = () => {
       }
 
       const token = localStorage.getItem('token')
+      if (!token) {
+        throw new Error('Token not found in localStorage.')
+      }
 
-      await axiosInstance.patch(
+      const movie = movies.find((movie) => movie._id === movieId)
+      if (!movie) {
+        throw new Error('Movie not found.')
+      }
+
+      const updatedMovie = await axiosInstance.patch(
         `/api/v1/movies/${movieId}`,
         {
-          vote_count: movies.find((movie) => movie._id === movieId).vote_count + 1
+          vote_count: movie.vote_count + 1
         },
         {
           headers: {
@@ -87,11 +95,8 @@ const Home = () => {
         }
       )
 
-      const updatedMovieResponse = await axiosInstance.get(`/api/v1/movies/vote-counts/${movieId}`)
-      const updatedMovie = updatedMovieResponse.data
-
       setMovies((prevMovies) =>
-        prevMovies.map((movie) => (movie._id === movieId ? { ...movie, vote_count: updatedMovie.vote_count } : movie))
+        prevMovies.map((movie) => (movie._id === movieId ? { ...movie, vote_count: updatedMovie.data.vote_count } : movie))
       )
 
       setLikedMovies((prevState) => ({
@@ -102,7 +107,7 @@ const Home = () => {
       alert("You've liked the movie successfully.")
     } catch (error) {
       console.error('Error liking movie:', error)
-      alert('Failed to like the movie. Please try again later.')
+      alert(`Failed to like the movie: ${error.message}`)
     }
   }
 
