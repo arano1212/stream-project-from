@@ -5,5 +5,6 @@ import Register from '@/Pages/Register'
 import CreateMovie from '@/Pages/CreateMovie'
 import Secret from '@/Pages/Secret'
 import About from '@/Pages/About'
+import Something from '@/Pages/Something'
 
-export { Login, Home, Welcome, Register, CreateMovie, Secret, About }
+export { Login, Home, Welcome, Register, CreateMovie, Secret, About, Something }

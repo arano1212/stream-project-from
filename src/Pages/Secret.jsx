@@ -33,7 +33,7 @@ const Secret = () => {
       await deleteUser(selectedUser._id, token)
       setUsers(users.filter(user => user._id !== selectedUser._id))
       setShowModal(false)
-      setSelectedUser(null) // Limpiar selectedUser después de borrar
+      setSelectedUser(null)
     } catch (error) {
       console.error('Error deleting user:', error)
     }

@@ -1,4 +1,3 @@
-// Header.jsx
 import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuthContext } from '@/Hooks/useAuth'
@@ -76,9 +75,9 @@ const Header = () => {
                         </>
                       )}
 
-                      <a className='dropdown-item' href='#'>
+                      <NavLink className='dropdown-item' to='/something'>
                         Something else here
-                      </a>
+                      </NavLink>
                       <div className='dropdown-divider' />
                       <button className='dropdown-item btn' onClick={handleLogout}>
                         Logout
