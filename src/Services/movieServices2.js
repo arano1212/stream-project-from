@@ -13,10 +13,14 @@ const createMovie = (data, token) => axios.post(
 
     }
 )
+const searchQueryMovie = (queryKeys) => axios.get(`${BASE_URL}/movies/search`, {
+  params: { title: queryKeys }
+})
 
 export {
   getAllMovieServices,
   getLike,
   deleteMovie,
-  createMovie
+  createMovie,
+  searchQueryMovie
 }

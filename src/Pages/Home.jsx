@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import { FaThumbsUp, FaRegBell } from 'react-icons/fa'
 import { AiOutlineClose } from 'react-icons/ai'
-import { getAllMovieServices, getLike, deleteMovie } from '@/Services/movieServices2'
+import { getAllMovieServices, getLike, deleteMovie, searchQueryMovie } from '@/Services/movieServices2'
 import '@/Styles/home.css'
 import '@/Styles/like.css'
 
@@ -24,6 +24,7 @@ const Home = () => {
   const [selectedMovie, setSelectedMovie] = useState(null)
   const [showModal, setShowModal] = useState(false)
   const [likedMovies, setLikedMovies] = useState({})
+  const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(() => {
     getAllMovieServices({
@@ -137,6 +138,21 @@ const Home = () => {
     }
   }
 
+  const handleSearch = async (event) => {
+    event.preventDefault()
+    if (!searchTerm.trim()) {
+      return
+    }
+
+    try {
+      const response = await searchQueryMovie(searchTerm)
+      setShuffledMovies(response.data || [])
+    } catch (error) {
+      console.error('Error searching movies:', error)
+      alert('Failed to search for movies. Please try again later.')
+    }
+  }
+
   const movieRows = []
   for (let i = 0; i < shuffledMovies.length; i += 7) {
     movieRows.push(shuffledMovies.slice(i, i + 7))
@@ -144,6 +160,18 @@ const Home = () => {
 
   return (
     <div className='home-container'>
+      <div className='search-container'>
+        <form className='d-flex' onSubmit={handleSearch}>
+          <input
+            className='form-control me-sm-2'
+            type='search'
+            placeholder='Search'
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <button className='btn btn-secondary my-2 my-sm-0' type='submit'>Search</button>
+        </form>
+      </div>
       {featuredMovie && (
         <div className='featured-movie'>
           <img

@@ -58,7 +58,7 @@ const Header = () => {
                       aria-haspopup='true'
                       aria-expanded='false'
                     >
-                      Dropdown
+                      Menu
                     </a>
                     <div className='dropdown-menu'>
                       {userPayload?.role === 'admin' && (
