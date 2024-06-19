@@ -1,3 +1,5 @@
+// Header.jsx
+import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuthContext } from '@/Hooks/useAuth'
 
@@ -47,7 +49,9 @@ const Header = () => {
                     </NavLink>
                   </li>
                   <li className='nav-item'>
-                    <a className='nav-link' href='#'>About</a>
+                    <a className='nav-link' href='#'>
+                      About
+                    </a>
                   </li>
                   <li className='nav-item dropdown'>
                     <a
@@ -62,12 +66,19 @@ const Header = () => {
                     </a>
                     <div className='dropdown-menu'>
                       {userPayload?.role === 'admin' && (
-                        <NavLink className='dropdown-item' to='/createmovie'>
-                          Post
-                        </NavLink>
+                        <>
+                          <NavLink className='dropdown-item' to='/createmovie'>
+                            Post
+                          </NavLink>
+                          <NavLink className='dropdown-item' to='/secret'>
+                            Information
+                          </NavLink>
+                        </>
                       )}
-                      <NavLink className='dropdown-item' to='/secret'>information</NavLink>
-                      <a className='dropdown-item' href='#'>Something else here</a>
+
+                      <a className='dropdown-item' href='#'>
+                        Something else here
+                      </a>
                       <div className='dropdown-divider' />
                       <button className='dropdown-item btn' onClick={handleLogout}>
                         Logout
@@ -79,13 +90,19 @@ const Header = () => {
               : (
                 <>
                   <li className='nav-item'>
-                    <NavLink className='nav-link' to='/welcome'>Welcome</NavLink>
+                    <NavLink className='nav-link' to='/welcome'>
+                      Welcome
+                    </NavLink>
                   </li>
                   <li className='nav-item'>
-                    <NavLink className='nav-link' to='/login'>Login</NavLink>
+                    <NavLink className='nav-link' to='/login'>
+                      Login
+                    </NavLink>
                   </li>
                   <li className='nav-item'>
-                    <NavLink className='nav-link' to='/register'>Register</NavLink>
+                    <NavLink className='nav-link' to='/register'>
+                      Register
+                    </NavLink>
                   </li>
                 </>
                 )}
