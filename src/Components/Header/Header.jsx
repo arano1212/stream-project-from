@@ -52,6 +52,11 @@ const Header = () => {
                       About
                     </NavLink>
                   </li>
+                  <li className='nav-item'>
+                    <NavLink className='nav-link' to='/tv'>
+                      tv Shows
+                    </NavLink>
+                  </li>
                   <li className='nav-item dropdown'>
                     <a
                       className='nav-link dropdown-toggle'
